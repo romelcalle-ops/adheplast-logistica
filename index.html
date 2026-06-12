@@ -1,16 +1,205 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="es">
 <head>
-<title>ADHEPLAST LOGISTICA</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ADHEPLAST LOGÍSTICA</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Segoe UI,Arial,sans-serif;
+    background:#0f172a;
+    color:white;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.header h1{
+    margin:0;
+    font-size:32px;
+}
+
+.meta{
+    color:#22c55e;
+    font-size:20px;
+    margin-top:10px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.card{
+    background:#1e293b;
+    border-radius:15px;
+    padding:20px;
+    text-align:center;
+}
+
+.card .valor{
+    font-size:34px;
+    font-weight:bold;
+}
+
+.bodega{
+    background:#1e293b;
+    padding:15px;
+    border-radius:12px;
+    margin-bottom:12px;
+}
+
+.progress{
+    width:100%;
+    background:#334155;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.bar{
+    height:30px;
+    line-height:30px;
+    text-align:right;
+    padding-right:10px;
+    font-weight:bold;
+    color:white;
+}
+
+.footer{
+    text-align:center;
+    margin-top:25px;
+    color:#94a3b8;
+}
+</style>
+
 </head>
-<body style="background:black;color:white;font-family:Arial">
 
-<h1>ADHEPLAST LOGISTICA</h1>
+<body>
 
-<h2>DASHBOARD NUEVO</h2>
+<div class="container">
 
-<p>Ing. Romel Calle</p>
+<div class="header">
+<h1>ADHEPLAST LOGÍSTICA</h1>
+<div class="meta">META CORPORATIVA: 85%</div>
+</div>
+
+<div class="cards">
+
+<div class="card">
+<div class="valor" id="cumplen">0</div>
+<div>Cumplen Meta</div>
+</div>
+
+<div class="card">
+<div class="valor" id="promedio">0%</div>
+<div>Promedio Nacional</div>
+</div>
+
+<div class="card">
+<div class="valor" id="mejor">-</div>
+<div>Mejor Bodega</div>
+</div>
+
+</div>
+
+<div id="bodegas"></div>
+
+<div class="footer">
+Actualización automática
+</div>
+
+</div>
+
+<script>
+
+const urlCSV =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vSBMatUrloxIOHlTpa2Wq4pMcI345n5L7p5hxXa2KllNIUgF2b6CJD0fHO7F9XM7d2pmQsYYnbXCKDX/pub?output=csv";
+
+fetch(urlCSV)
+.then(r=>r.text())
+.then(csv=>{
+
+const filas = csv.trim().split("\n");
+
+let total = 0;
+let cumplen = 0;
+let mejorNombre = "";
+let mejorValor = 0;
+
+const contenedor = document.getElementById("bodegas");
+
+filas.slice(1).forEach(fila=>{
+
+const c = fila.split(",");
+
+if(c.length < 2) return;
+
+const nombre = c[0].trim();
+const valor = parseFloat(c[1]);
+
+if(isNaN(valor)) return;
+
+total += valor;
+
+if(valor >= 85) cumplen++;
+
+if(valor > mejorValor){
+    mejorValor = valor;
+    mejorNombre = nombre;
+}
+
+let color = "#ef4444";
+
+if(valor >= 85){
+    color = "#22c55e";
+}else if(valor >= 80){
+    color = "#f59e0b";
+}
+
+contenedor.innerHTML += `
+<div class="bodega">
+<b>${nombre}</b>
+<div class="progress">
+<div class="bar" style="width:${valor}%;background:${color}">
+${valor}%
+</div>
+</div>
+</div>
+`;
+
+});
+
+const cantidad = filas.length - 1;
+
+document.getElementById("cumplen").innerText =
+cumplen + " / " + cantidad;
+
+document.getElementById("promedio").innerText =
+(total/cantidad).toFixed(1) + "%";
+
+document.getElementById("mejor").innerText =
+mejorNombre;
+
+})
+.catch(error=>{
+document.getElementById("bodegas").innerHTML =
+"<h2>Error al leer Google Sheets</h2>";
+});
+
+</script>
 
 </body>
 </html>
