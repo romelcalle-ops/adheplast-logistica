@@ -1,0 +1,15 @@
+{
+  "meta": 85,
+  "bodegas": [
+    {"nombre":"Adheplast 1","valor":84},
+    {"nombre":"Adheplast 2","valor":68},
+    {"nombre":"Bodega 64","valor":70},
+    {"nombre":"Guayaquil","valor":82},
+    {"nombre":"Quito","valor":96},
+    {"nombre":"Manta","valor":86},
+    {"nombre":"Ambato","valor":98},
+    {"nombre":"Sto. Domingo","valor":97},
+    {"nombre":"Ibarra","valor":37},
+    {"nombre":"Loja","valor":87}
+  ]
+}
