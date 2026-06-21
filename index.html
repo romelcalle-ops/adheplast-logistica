@@ -1,219 +1,249 @@
-    <!DOCTYPE html>
-    
-    <html lang="es">
-    <head>
+<!DOCTYPE html>
+<html lang="es">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0f172a">
-    <meta name="mobile-web-app-capable" content="yeS">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <style>
-   body{
-    margin:0;
-    font-family:Segoe UI,Arial,sans-serif;
-    background:#0f172a;
-    color:#ffffff;
-}
-    
-    .container{
-        max-width:1200px;
-        margin:auto;
-        padding:20px;
-    }
-    
-   .header{
-text-align:center;
-margin-bottom:25px;
-}
+        body {
+            margin: 0;
+            font-family: Segoe UI, Arial, sans-serif;
+            background: #0f172a;
+            color: #ffffff;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
 
-.header img{
-display:block;
-margin:auto;
-}
+        .header img {
+            display: block;
+            margin: auto;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+        
+        .meta {
+            color: #22c55e;
+            font-size: 20px;
+            margin-top: 10px;
+        }
+        
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .card {
+            background: #1e293b;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .card .valor {
+            font-size: 34px;
+            font-weight: bold;
+        }
+        
+        .bodega {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+        
+        .bodega-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 5px;
+            color: #38bdf8;
+        }
 
-    
-    .header h1{
-        margin:0;
-        font-size:32px;
-    }
-    
-    .meta{
-        color:#22c55e;
-        font-size:20px;
-        margin-top:10px;
-    }
-    
-    .cards{
-        display:grid;
-        grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-        gap:15px;
-        margin-bottom:25px;
-    }
-    
-    .card{
-        background:#1e293b;
-        border-radius:15px;
-        padding:20px;
-        text-align:center;
-    }
-    
-    .card .valor{
-        font-size:34px;
-        font-weight:bold;
-    }
-    
-    .bodega{
-        background:#1e293b;
-        padding:15px;
-        border-radius:12px;
-        margin-bottom:12px;
-    }
-    
-    .progress{
-        width:100%;
-        background:#334155;
-        border-radius:20px;
-        overflow:hidden;
-    }
-    
-    .bar{
-        height:30px;
-        line-height:30px;
-        text-align:right;
-        padding-right:10px;
-        font-weight:bold;
-        color:white;
-    }
-    
-    .footer{
-        text-align:center;
-        margin-top:25px;
-        color:#94a3b8;
-    }
+        .indicador-block {
+            margin-bottom: 10px;
+        }
+
+        .indicador-label {
+            font-size: 13px;
+            color: #94a3b8;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .progress {
+            width: 100%;
+            background: #334155;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        
+        .bar {
+            height: 25px;
+            line-height: 25px;
+            text-align: right;
+            padding-right: 10px;
+            font-weight: bold;
+            color: white;
+            font-size: 13px;
+            transition: width 0.5s ease;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            color: #94a3b8;
+        }
     </style>
-    
-    </head>
-    
-    <body>
-    
+</head>
+<body>
     <div class="container">
-    
-    <div class="header">
-
-<img src="LOGO ADHEPLAST.png"
-  alt="ADHEPLAST"
-  style="width:220px;max-width:90%;margin-bottom:15px;">
-
-<div class="meta">META CORPORATIVA: ENTREGAS EN 24 HORAS 85%</div>
-
-</div>
-
-    
-    <div class="cards">
-    
-    <div class="card">
-    <div class="valor" id="cumplen">0</div>
-    <div>Cumplen Meta</div>
-    </div>
-    
-    <div class="card">
-    <div class="valor" id="promedio">0%</div>
-    <div>Promedio Nacional</div>
-    </div>
-    
-    <div class="card">
-    <div class="valor" id="mejor">-</div>
-    <div>Mejor Bodega</div>
-    </div>
-    
-    </div>
-    
-    <div id="bodegas"></div>
-    
-    <div class="footer">
-    Actualización automática
-    </div>
-    
+        <div class="header">
+            <img src="LOGO ADHEPLAST.png" alt="ADHEPLAST" style="width:220px;max-width:90%;margin-bottom:15px;">
+            <div class="meta">META CORPORATIVA: ENTREGAS EN 24 HORAS 85%</div>
+        </div>
+        
+        <div class="cards">
+            <div class="card">
+                <div class="valor" id="cumplen">0</div>
+                <div>Cumplen Meta (24h)</div>
+            </div>
+            
+            <div class="card">
+                <div class="valor" id="promedio">0%</div>
+                <div>Promedio Nacional (24h)</div>
+            </div>
+            
+            <div class="card">
+                <div class="valor" id="mejor">-</div>
+                <div>Mejor Bodega (24h)</div>
+            </div>
+        </div>
+        
+        <div id="bodegas"></div>
+        
+        <div class="footer">
+            Actualización automática
+        </div>
     </div>
     
     <script>
-    
-    const urlCSV =
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vSBMatUrloxIOHlTpa2Wq4pMcI345n5L7p5hxXa2KllNIUgF2b6CJD0fHO7F9XM7d2pmQsYYnbXCKDX/pub?output=csv";
-    
-    fetch(urlCSV)
-    .then(r=>r.text())
-    .then(csv=>{
-    
-    const filas = csv.trim().split("\n");
-    
-    let total = 0;
-    let cumplen = 0;
-    let mejorNombre = "";
-    let mejorValor = 0;
-    
-    const contenedor = document.getElementById("bodegas");
-    
-    filas.slice(1).forEach(fila=>{
-    
-    const c = fila.split(",");
-    
-    if(c.length < 2) return;
-    
-    const nombre = c[0].trim();
-    const valor = parseFloat(c[1]);
-    
-    if(isNaN(valor)) return;
-    
-    total += valor;
-    
-    if(valor >= 85) cumplen++;
-    
-    if(valor > mejorValor){
-        mejorValor = valor;
-        mejorNombre = nombre;
-    }
-    
-    let color = "#ef4444";
-    
-    if(valor >= 85){
-        color = "#22c55e";
-    }else if(valor >= 80){
-        color = "#f59e0b";
-    }
-    
-    contenedor.innerHTML += `
-    <div class="bodega">
-    <b>${nombre}</b>
-    <div class="progress">
-    <div class="bar" style="width:${valor}%;background:${color}">
-    ${valor}%
-    </div>
-    </div>
-    </div>
-    `;
-    
-    });
-    
-    const cantidad = filas.length - 1;
-    
-    document.getElementById("cumplen").innerText =
-    cumplen + " / " + cantidad;
-    
-    document.getElementById("promedio").innerText =
-    (total/cantidad).toFixed(1) + "%";
-    
-    document.getElementById("mejor").innerText =
-    mejorNombre;
-    
-    })
-    .catch(error=>{
-    document.getElementById("bodegas").innerHTML =
-    "<h2>Error al leer Google Sheets</h2>";
-    });
-    
+        const urlCSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSBMatUrloxIOHlTpa2Wq4pMcI345n5L7p5hxXa2KllNIUgF2b6CJD0fHO7F9XM7d2pmQsYYnbXCKDX/pub?output=csv";
+        
+        // Función auxiliar para definir colores según el cumplimiento
+        function obtenerColor(valor) {
+            if(valor >= 85) return "#22c55e"; // Verde
+            if(valor >= 80) return "#f59e0b"; // Amarillo/Naranja
+            return "#ef4444"; // Rojo
+        }
+        
+        fetch(urlCSV)
+        .then(r => r.text())
+        .then(csv => {
+            const filas = csv.trim().split(/\r?\n/);
+            
+            let total24 = 0;
+            let cumplen24 = 0;
+            let mejorNombre24 = "";
+            let mejorValor24 = 0;
+            let cantidadValida = 0;
+            
+            const contenedor = document.getElementById("bodegas");
+            contenedor.innerHTML = ""; 
+            
+            filas.slice(1).forEach(fila => {
+                const c = fila.split(",");
+                
+                if(c.length < 2) return;
+                
+                const nombre = c[0].trim();
+                const v24 = parseFloat(c[1]);
+                const v48 = c[2] ? parseFloat(c[2]) : 0;
+                const v72 = c[3] ? parseFloat(c[3]) : 0;
+                
+                if(isNaN(v24)) return;
+                
+                cantidadValida++;
+                total24 += v24;
+                
+                if(v24 >= 85) cumplen24++;
+                
+                if(v24 > mejorValor24){
+                    mejorValor24 = v24;
+                    mejorNombre24 = nombre;
+                }
+                
+                // Colores individuales para cada barra de la bodega
+                let color24 = obtenerColor(v24);
+                let color48 = obtenerColor(v48);
+                let color72 = obtenerColor(v72);
+                
+                // Formatear texto para las barras si no son números válidos
+                let txt24 = isNaN(v24) ? "0%" : v24 + "%";
+                let txt48 = isNaN(v48) ? "0%" : v48 + "%";
+                let txt72 = isNaN(v72) ? "0%" : v72 + "%";
+                
+                // Agregar la bodega con sus 3 barras de indicadores
+                contenedor.innerHTML += `
+                <div class="bodega">
+                    <div class="bodega-title">${nombre}</div>
+                    
+                    <div class="indicador-block">
+                        <span class="indicador-label">Entregas en 24 Horas</span>
+                        <div class="progress">
+                            <div class="bar" style="width:${isNaN(v24)?0:v24}%;background:${color24}">
+                                ${txt24}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="indicador-block">
+                        <span class="indicador-label">Entregas en 48 Horas</span>
+                        <div class="progress">
+                            <div class="bar" style="width:${isNaN(v48)?0:v48}%;background:${color48}">
+                                ${txt48}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="indicador-block">
+                        <span class="indicador-label">Entregas en 72 Horas</span>
+                        <div class="progress">
+                            <div class="bar" style="width:${isNaN(v72)?0:v72}%;background:${color72}">
+                                ${txt72}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `;
+            });
+            
+            // Las tarjetas superiores siguen midiendo la meta principal (24 horas)
+            document.getElementById("cumplen").innerText = cumplen24 + " / " + cantidadValida;
+            document.getElementById("promedio").innerText = (cantidadValida > 0 ? (total24/cantidadValida).toFixed(1) : 0) + "%";
+            document.getElementById("mejor").innerText = mejorNombre24 || "-";
+        })
+        .catch(error => {
+            console.error(error);
+            document.getElementById("bodegas").innerHTML = "<h2>Error al leer Google Sheets</h2>";
+        });
     </script>
-    
-    </body>
-    </html>
+</body>
+</html>
