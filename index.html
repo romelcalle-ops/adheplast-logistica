@@ -13,6 +13,490 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
+<title>Logística ADHEPLAST</title>
+
+
+<style>
+
+body {
+
+margin:0;
+
+font-family:"Segoe UI",Arial,sans-serif;
+
+background:#0f172a;
+
+color:white;
+
+}
+
+
+
+.container {
+
+max-width:1200px;
+
+margin:auto;
+
+padding:20px;
+
+}
+
+
+
+.header {
+
+text-align:center;
+
+margin-bottom:25px;
+
+}
+
+
+
+.header img {
+
+width:220px;
+
+max-width:90%;
+
+}
+
+
+
+.header h1 {
+
+font-size:32px;
+
+margin:10px;
+
+}
+
+
+
+.meta {
+
+color:#22c55e;
+
+font-size:18px;
+
+}
+
+
+
+.cards {
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+gap:15px;
+
+margin-bottom:25px;
+
+}
+
+
+
+.card {
+
+background:#1e293b;
+
+border-radius:15px;
+
+padding:20px;
+
+text-align:center;
+
+}
+
+
+
+.valor {
+
+font-size:34px;
+
+font-weight:bold;
+
+color:#38bdf8;
+
+}
+
+
+
+.bodegas {
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+
+gap:15px;
+
+}
+
+
+
+.bodega {
+
+background:#1e293b;
+
+border-radius:15px;
+
+padding:20px;
+
+}
+
+
+
+.bodega-title {
+
+font-size:20px;
+
+font-weight:bold;
+
+color:#38bdf8;
+
+margin-bottom:15px;
+
+}
+
+
+
+.indicador {
+
+margin-bottom:12px;
+
+}
+
+
+
+.indicador span {
+
+font-size:13px;
+
+color:#94a3b8;
+
+}
+
+
+
+.progress {
+
+height:24px;
+
+background:#334155;
+
+border-radius:20px;
+
+overflow:hidden;
+
+margin-top:5px;
+
+}
+
+
+
+.bar {
+
+height:24px;
+
+line-height:24px;
+
+text-align:right;
+
+padding-right:8px;
+
+font-size:12px;
+
+font-weight:bold;
+
+}
+
+
+
+.btn {
+
+width:100%;
+
+margin-top:15px;
+
+padding:10px;
+
+border:0;
+
+border-radius:8px;
+
+background:#0284c7;
+
+color:white;
+
+font-weight:bold;
+
+cursor:pointer;
+
+}
+
+
+
+.btn:hover {
+
+background:#0369a1;
+
+}
+
+
+
+#detalle {
+
+display:none;
+
+background:#1e293b;
+
+border-radius:15px;
+
+padding:20px;
+
+margin-top:20px;
+
+}
+
+
+
+table {
+
+width:100%;
+
+border-collapse:collapse;
+
+}
+
+
+
+th {
+
+background:#334155;
+
+padding:10px;
+
+}
+
+
+
+td {
+
+padding:10px;
+
+border-bottom:1px solid #475569;
+
+}
+
+
+
+.footer {
+
+text-align:center;
+
+margin-top:30px;
+
+color:#94a3b8;
+
+}
+
+
+
+@media(max-width:600px){
+
+.header h1{
+
+font-size:24px;
+
+}
+
+
+.valor{
+
+font-size:28px;
+
+}
+
+}
+
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<div class="header">
+
+
+<img src="LOGO ADHEPLAST.png"
+alt="ADHEPLAST">
+
+
+<h1>
+LOGÍSTICA ADHEPLAST
+</h1>
+
+
+<div class="meta">
+
+META CORPORATIVA:
+ENTREGAS EN 24 HORAS ≥ 85%
+
+</div>
+
+
+</div>
+
+
+
+<div class="cards">
+
+
+<div class="card">
+
+<div class="valor" id="cumplen">
+
+0 / 10
+
+</div>
+
+<div>
+
+Bodegas cumplen meta
+
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="valor" id="promedio">
+
+0%
+
+</div>
+
+<div>
+
+Promedio nacional 24 horas
+
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="valor" id="mejor">
+
+-
+
+</div>
+
+<div>
+
+Mejor bodega
+
+</div>
+
+</div>
+
+
+</div>
+
+
+
+<div id="bodegas" class="bodegas">
+
+</div>
+
+
+
+<div id="detalle">
+
+
+<h2 id="tituloDetalle">
+
+Facturas pendientes
+
+</h2>
+
+
+<table>
+
+
+<thead>
+
+<tr>
+
+<th>Fecha</th>
+
+<th>Comprobante</th>
+
+<th>Cliente</th>
+
+<th>Ciudad</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="tablaDetalle">
+
+
+</tbody>
+
+
+</table>
+
+
+<button class="btn" onclick="cerrarDetalle()">
+
+← Regresar
+
+</button>
+
+
+</div>
+
+
+
+<div class="footer">
+
+Actualización automática - Dashboard Logístico ADHEPLAST
+
+</div>
+
+
+</div>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="manifest" href="manifest.json">
+
+<meta name="theme-color" content="#0f172a">
+
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
 
 <title>Logística ADHEPLAST</title>
 
